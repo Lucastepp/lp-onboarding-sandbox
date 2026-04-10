@@ -1,0 +1,14 @@
+# .NET
+bin/
+obj/
+
+# Angular / Node
+node_modules/
+dist/
+
+# VS Code / Visual Studio
+.vscode/
+.vs/
+
+# logs
+*.log
