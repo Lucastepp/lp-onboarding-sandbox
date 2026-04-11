@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="LP.Api.Customer.Onboarding/LP.Api.Customer.Onboarding.csproj" Id="6fd7a5c4-1cf9-4cc9-9ff1-f218de7713c9" />
+  <Project Path="LP.Domain.Onboarding/LP.Domain.Onboarding.csproj" Id="44da7950-9fbd-40f1-a125-e32d7b1b45a0" />
+  <Project Path="LP.EventTransformation.Onboarding/LP.EventTransformation.Onboarding.csproj" Id="ef9889df-af0e-43ad-b5c9-f965781a2679" />
+</Solution>

@@ -1,0 +1,6 @@
+@LP.Api.Customer.Onboarding_HostAddress = http://localhost:5135
+
+GET {{LP.Api.Customer.Onboarding_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
