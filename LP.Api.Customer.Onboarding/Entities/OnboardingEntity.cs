@@ -1,8 +1,8 @@
 ﻿using LP.Api.Customer.Onboarding.Enums;
 
-namespace LP.Domain.Onboarding.Entities;
+namespace LP.Api.Customer.Onboarding.Entities;
 
-public class Onboarding
+public class OnboardingEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
