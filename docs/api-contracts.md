@@ -206,3 +206,15 @@ Possible fields:
 - The backend is the source of truth for onboarding progress
 - Only the Signup contract is implemented initially
 - Other contracts will be refined later
+
+---
+
+## Behavior
+
+- When a signup request is received, a new onboarding is created
+- The onboarding is stored in memory (temporary persistence)
+- The initial state is:
+  - status: InProgress
+  - lastCompletedStep: Signup
+  - currentStep: CompanyDetails
+- The API returns the onboardingId for future steps

@@ -1,11 +1,19 @@
 ﻿using LP.Api.Customer.Onboarding.Contracts.Signup;
 using LP.Api.Customer.Onboarding.Enums;
 using LP.Api.Customer.Onboarding.Entities;
+using LP.Api.Customer.Onboarding.Repositories;
 
 namespace LP.Api.Customer.Onboarding.Services
 {
     public class OnboardingService : IOnboardingService
     {
+        private readonly IOnboardingRepository _repository;
+
+        public OnboardingService(IOnboardingRepository repository)
+        {
+            _repository = repository;
+        }
+
         public SignupResponse Signup(SignupRequest request)
         {
             var onboarding = new OnboardingEntity
@@ -21,6 +29,8 @@ namespace LP.Api.Customer.Onboarding.Services
                 CurrentStep = OnboardingStep.CompanyDetails
             };
 
+            _repository.Save(onboarding);
+
             var response = new SignupResponse
             {
                 OnboardingId = onboarding.Id,
@@ -30,6 +40,10 @@ namespace LP.Api.Customer.Onboarding.Services
             };
 
             return response;
+        }
+        public OnboardingEntity? GetById(Guid id)
+        {
+            return _repository.GetById(id);
         }
     }
 }
