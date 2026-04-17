@@ -7,5 +7,5 @@ public interface IOnboardingService
 {
     SignupResponse Signup(SignupRequest request);
 
-    OnboardingEntity? GetById(Guid id);
+    OnboardingEntity? GetByLeadId(Guid leadId);
 }

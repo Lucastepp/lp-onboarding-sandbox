@@ -5,5 +5,5 @@ namespace LP.Api.Customer.Onboarding.Repositories;
 public interface IOnboardingRepository
 {
     void Save(OnboardingEntity onboarding);
-    OnboardingEntity? GetById(Guid id);
+    OnboardingEntity? GetByLeadId(Guid id);
 }

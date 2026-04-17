@@ -33,7 +33,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             var response = new SignupResponse
             {
-                OnboardingId = onboarding.Id,
+                OnboardingId = onboarding.LeadId,
                 Status = onboarding.Status.ToString(),
                 LastCompletedStep = onboarding.LastCompletedStep.ToString(),
                 CurrentStep = onboarding.CurrentStep.ToString()
@@ -41,9 +41,9 @@ namespace LP.Api.Customer.Onboarding.Services
 
             return response;
         }
-        public OnboardingEntity? GetById(Guid id)
+        public OnboardingEntity? GetByLeadId(Guid leadId)
         {
-            return _repository.GetById(id);
+            return _repository.GetByLeadId(leadId);
         }
     }
 }

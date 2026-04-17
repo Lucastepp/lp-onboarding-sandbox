@@ -24,7 +24,7 @@ namespace LP.Api.Customer.Onboarding.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var onboarding = _onboardingService.GetById(id);
+            var onboarding = _onboardingService.GetByLeadId(id);
             if (onboarding == null)
             {
                 return NotFound();

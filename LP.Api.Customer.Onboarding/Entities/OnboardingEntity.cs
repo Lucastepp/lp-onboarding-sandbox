@@ -4,7 +4,7 @@ namespace LP.Api.Customer.Onboarding.Entities;
 
 public class OnboardingEntity
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid LeadId { get; set; } = Guid.NewGuid();
 
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

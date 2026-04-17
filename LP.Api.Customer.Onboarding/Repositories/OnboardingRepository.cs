@@ -11,8 +11,8 @@ public class OnboardingRepository : IOnboardingRepository
         _storage.Add(onboarding);
     }
 
-    public OnboardingEntity? GetById(Guid id)
+    public OnboardingEntity? GetByLeadId(Guid id)
     {
-        return _storage.FirstOrDefault(x => x.Id == id);
+        return _storage.FirstOrDefault(x => x.LeadId == id);
     }
 }
