@@ -13,6 +13,9 @@ public class OnboardingEntity
     public string PhoneNumber { get; set; } = string.Empty;
     public string Country { get; set; } = string.Empty;
 
+    public CompanyDetails? CompanyDetails { get; set; }
+    public PersonalDetails? PersonalDetails { get; set; }
+
     public OnboardingStatus Status { get; set; }
     public OnboardingStep LastCompletedStep { get; set; }
     public OnboardingStep CurrentStep { get; set; }
