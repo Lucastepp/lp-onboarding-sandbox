@@ -14,9 +14,4 @@
     <ProjectReference Include="..\LP.Domain.Onboarding\LP.Domain.Onboarding.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\CompanyDetails\" />
-    <Folder Include="Contracts\PersonalDetails\" />
-  </ItemGroup>
-
 </Project>
