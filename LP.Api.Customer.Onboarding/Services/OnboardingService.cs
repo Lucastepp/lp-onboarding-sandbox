@@ -14,7 +14,7 @@ namespace LP.Api.Customer.Onboarding.Services
             _repository = repository;
         }
 
-        public SignupResponse Signup(SignupRequest request)
+        public OnboardingResponse Signup(SignupRequest request)
         {
             var onboarding = new OnboardingEntity
             {
@@ -31,7 +31,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             _repository.Save(onboarding);
 
-            var response = new SignupResponse
+            var response = new OnboardingResponse
             {
                 OnboardingId = onboarding.LeadId,
                 Status = onboarding.Status.ToString(),

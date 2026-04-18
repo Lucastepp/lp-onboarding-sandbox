@@ -5,7 +5,7 @@ namespace LP.Api.Customer.Onboarding.Services;
 
 public interface IOnboardingService
 {
-    SignupResponse Signup(SignupRequest request);
+    OnboardingResponse Signup(SignupRequest request);
 
     OnboardingEntity? GetByLeadId(Guid leadId);
 }

@@ -1,6 +1,6 @@
 ﻿namespace LP.Api.Customer.Onboarding.Contracts.Signup
 {
-    public class SignupResponse
+    public class OnboardingResponse
     {
         public Guid OnboardingId { get; set; }
         public string Status { get; set; } = string.Empty;
