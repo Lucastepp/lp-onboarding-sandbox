@@ -1,10 +1,9 @@
-﻿namespace LP.Api.Customer.Onboarding.Entities
+﻿namespace LP.Api.Customer.Onboarding.Entities;
+
+public class PersonalDetails
 {
-    public class PersonalDetails
-    {
-        public DateTime DateOfBirth { get; set; }
-        public string Nationality { get; set; } = string.Empty;
-        public string ResidentialAddress { get; set; } = string.Empty;
-        public string EmploymentStatus { get; set; } = string.Empty;
-    }
+    public DateTime DateOfBirth { get; set; }
+    public string Nationality { get; set; } = string.Empty;
+    public string ResidentialAddress { get; set; } = string.Empty;
+    public string EmploymentStatus { get; set; } = string.Empty;
 }

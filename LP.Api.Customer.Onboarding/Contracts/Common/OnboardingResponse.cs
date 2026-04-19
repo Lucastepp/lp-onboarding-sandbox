@@ -1,10 +1,9 @@
-﻿namespace LP.Api.Customer.Onboarding.Contracts.Signup
+﻿namespace LP.Api.Customer.Onboarding.Contracts.Common;
+
+public class OnboardingResponse
 {
-    public class OnboardingResponse
-    {
-        public Guid OnboardingId { get; set; }
-        public string Status { get; set; } = string.Empty;
-        public string LastCompletedStep { get; set; } = string.Empty;
-        public string CurrentStep { get; set; } = string.Empty;
-    }
+    public Guid LeadId { get; set; }
+    public string Status { get; set; } = string.Empty;
+    public string LastCompletedStep { get; set; } = string.Empty;
+    public string CurrentStep { get; set; } = string.Empty;
 }
