@@ -1,6 +1,8 @@
 ﻿using LP.Api.Customer.Onboarding.Contracts.Signup;
 using Microsoft.AspNetCore.Mvc;
 using LP.Api.Customer.Onboarding.Services;
+using LP.Api.Customer.Onboarding.Contracts.CompanyDetails;
+using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
 
 namespace LP.Api.Customer.Onboarding.Controllers
 {
@@ -18,7 +20,35 @@ namespace LP.Api.Customer.Onboarding.Controllers
         [HttpPost("signup")]
         public IActionResult Signup([FromBody] SignupRequest request)
         {
-            return Ok();
+            var response = _onboardingService.Signup(request);
+
+            return Ok(response);
+        }
+
+        [HttpPut("{leadId:guid}/company-details")]
+        public IActionResult UpdateCompanyDetails(Guid leadId, [FromBody] CompanyDetailsRequest request)
+        {
+            var response = _onboardingService.UpdateCompanyDetails(leadId, request);
+
+            if (response is null) 
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPut("{leadId:guid}/personal-details")]
+        public IActionResult UpdatePersonalDetails(Guid leadId, [FromBody] PersonalDetailsRequest request)
+        {
+            var response = _onboardingService.UpdatePersonalDetails(leadId, request);
+
+            if (response is null) 
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
