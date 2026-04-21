@@ -15,6 +15,7 @@ public class OnboardingEntity
 
     public CompanyDetails? CompanyDetails { get; set; }
     public PersonalDetails? PersonalDetails { get; set; }
+    public FinancialDetails? FinancialDetails { get; set; }
 
     public OnboardingStatus Status { get; set; }
     public OnboardingStep LastCompletedStep { get; set; }

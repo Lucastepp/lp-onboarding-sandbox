@@ -5,6 +5,7 @@ using LP.Api.Customer.Onboarding.Repositories;
 using LP.Api.Customer.Onboarding.Contracts.CompanyDetails;
 using LP.Api.Customer.Onboarding.Contracts.Common;
 using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
+using LP.Api.Customer.Onboarding.Contracts.FinancialDetails;
 
 namespace LP.Api.Customer.Onboarding.Services
 {
@@ -97,6 +98,35 @@ namespace LP.Api.Customer.Onboarding.Services
                 Nationality = request.Nationality,
                 EmploymentStatus = request.EmploymentStatus,
                 ResidentialAddress = request.ResidentialAddress,
+            };
+
+            var response = new OnboardingResponse
+            {
+                LeadId = onboarding.LeadId,
+                Status = onboarding.Status.ToString(),
+                LastCompletedStep = onboarding.LastCompletedStep.ToString(),
+                CurrentStep = onboarding.CurrentStep.ToString()
+            };
+
+            return response;
+        }
+
+        public OnboardingResponse? UpdateFinancialDetails(Guid leadId, FinancialDetailsRequest request)
+        {
+            var onboarding = _repository.GetByLeadId(leadId);
+
+            if (onboarding == null)
+            {
+                return null;
+            }
+
+            onboarding.FinancialDetails = new FinancialDetails
+            {
+                UseOpenBanking = request.UseOpenBanking,
+                HasUploadedDocuments = request.HasUploadedDocuments,
+                AnnualRevenue = request.AnnualRevenue,
+                MonthlyRevenue = request.MonthlyRevenue,
+                MonthlyExpenses = request.MonthlyExpenses
             };
 
             var response = new OnboardingResponse

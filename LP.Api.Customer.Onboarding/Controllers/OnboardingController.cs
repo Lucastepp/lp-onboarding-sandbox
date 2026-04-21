@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using LP.Api.Customer.Onboarding.Services;
 using LP.Api.Customer.Onboarding.Contracts.CompanyDetails;
 using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
+using LP.Api.Customer.Onboarding.Contracts.FinancialDetails;
 
 namespace LP.Api.Customer.Onboarding.Controllers
 {
@@ -42,6 +43,19 @@ namespace LP.Api.Customer.Onboarding.Controllers
         public IActionResult UpdatePersonalDetails(Guid leadId, [FromBody] PersonalDetailsRequest request)
         {
             var response = _onboardingService.UpdatePersonalDetails(leadId, request);
+
+            if (response is null) 
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPut("{leadId:guid}/financial-details")]
+        public IActionResult UpdateFinancialDetails(Guid leadId, [FromBody] FinancialDetailsRequest request)
+        {
+            var response = _onboardingService.UpdateFinancialDetails(leadId, request);
 
             if (response is null) 
             {
