@@ -51,14 +51,16 @@ namespace LP.Api.Customer.Onboarding.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
+        [HttpGet("{leadId:guid}")]
+        public IActionResult GetByLeadId(Guid leadId)
         {
-            var onboarding = _onboardingService.GetByLeadId(id);
-            if (onboarding == null)
+            var onboarding = _onboardingService.GetByLeadId(leadId);
+
+            if (onboarding is null)
             {
                 return NotFound();
             }
+
             return Ok(onboarding);
         }
     }
