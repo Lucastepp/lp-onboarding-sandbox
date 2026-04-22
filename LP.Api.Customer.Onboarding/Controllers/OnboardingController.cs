@@ -26,6 +26,32 @@ namespace LP.Api.Customer.Onboarding.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{leadId:guid}")]
+        public IActionResult GetByLeadId(Guid leadId)
+        {
+            var onboarding = _onboardingService.GetByLeadId(leadId);
+
+            if (onboarding is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(onboarding);
+        }
+
+        [HttpGet("{leadId:guid}/progress")]
+        public IActionResult GetProgress(Guid leadId)
+        {
+            var response = _onboardingService.GetProgress(leadId);
+
+            if (response is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+
         [HttpPut("{leadId:guid}/company-details")]
         public IActionResult UpdateCompanyDetails(Guid leadId, [FromBody] CompanyDetailsRequest request)
         {
@@ -63,19 +89,6 @@ namespace LP.Api.Customer.Onboarding.Controllers
             }
 
             return Ok(response);
-        }
-
-        [HttpGet("{leadId:guid}")]
-        public IActionResult GetByLeadId(Guid leadId)
-        {
-            var onboarding = _onboardingService.GetByLeadId(leadId);
-
-            if (onboarding is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(onboarding);
         }
     }
 }

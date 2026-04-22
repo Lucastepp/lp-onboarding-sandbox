@@ -35,26 +35,38 @@ namespace LP.Api.Customer.Onboarding.Services
 
             _repository.Save(onboarding);
 
-            var response = new OnboardingResponse
-            {
-                LeadId = onboarding.LeadId,
-                Status = onboarding.Status.ToString(),
-                LastCompletedStep = onboarding.LastCompletedStep.ToString(),
-                CurrentStep = onboarding.CurrentStep.ToString()
-            };
+            return MapToOnboardingResponse(onboarding);
 
-            return response;
         }
-        public OnboardingEntity? GetByLeadId(Guid leadId)
+        public OnboardingResponse? GetByLeadId(Guid leadId)
         {
-            return _repository.GetByLeadId(leadId);
+            var onboarding = _repository.GetByLeadId(leadId);
+
+            if (onboarding is null)
+            {
+                return null;
+            }
+
+            return MapToOnboardingResponse(onboarding);
+        }
+
+        public OnboardingResponse? GetProgress(Guid leadId)
+        {
+            var onboarding = _repository.GetByLeadId(leadId);
+
+            if (onboarding is null)
+            {
+                return null;
+            }
+
+            return MapToOnboardingResponse(onboarding);
         }
 
         public OnboardingResponse? UpdateCompanyDetails(Guid leadId, CompanyDetailsRequest request)
         {
             var onboarding = _repository.GetByLeadId(leadId);
 
-            if (onboarding == null)
+            if (onboarding is null)
             {
                 return null;
             }
@@ -72,15 +84,7 @@ namespace LP.Api.Customer.Onboarding.Services
             onboarding.LastCompletedStep = OnboardingStep.CompanyDetails;
             onboarding.CurrentStep = OnboardingStep.PersonalDetails;
 
-            var response = new OnboardingResponse
-            {
-                LeadId = onboarding.LeadId,
-                Status = onboarding.Status.ToString(),
-                LastCompletedStep = onboarding.LastCompletedStep.ToString(),
-                CurrentStep = onboarding.CurrentStep.ToString()
-            };
-
-            return response;
+            return MapToOnboardingResponse(onboarding);
         }
 
         public OnboardingResponse? UpdatePersonalDetails(Guid leadId, PersonalDetailsRequest request)
@@ -100,15 +104,7 @@ namespace LP.Api.Customer.Onboarding.Services
                 ResidentialAddress = request.ResidentialAddress,
             };
 
-            var response = new OnboardingResponse
-            {
-                LeadId = onboarding.LeadId,
-                Status = onboarding.Status.ToString(),
-                LastCompletedStep = onboarding.LastCompletedStep.ToString(),
-                CurrentStep = onboarding.CurrentStep.ToString()
-            };
-
-            return response;
+            return MapToOnboardingResponse(onboarding);
         }
 
         public OnboardingResponse? UpdateFinancialDetails(Guid leadId, FinancialDetailsRequest request)
@@ -129,15 +125,18 @@ namespace LP.Api.Customer.Onboarding.Services
                 MonthlyExpenses = request.MonthlyExpenses
             };
 
-            var response = new OnboardingResponse
+            return MapToOnboardingResponse(onboarding);
+        }
+
+        public OnboardingResponse MapToOnboardingResponse(OnboardingEntity onboarding)
+        {
+            return new OnboardingResponse
             {
                 LeadId = onboarding.LeadId,
                 Status = onboarding.Status.ToString(),
                 LastCompletedStep = onboarding.LastCompletedStep.ToString(),
                 CurrentStep = onboarding.CurrentStep.ToString()
             };
-
-            return response;
         }
     }
 }   
