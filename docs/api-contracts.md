@@ -4,18 +4,17 @@
 
 This document defines the API contracts for the merchant onboarding flow.
 
-The first implementation focuses on the Signup step.
-Additional contracts are planned for later stages.
+The onboarding is implemented as a step-based process where the backend is responsible for tracking progress and state.
 
 ---
 
-## Implemented First
+## Implemented Endpoints
 
 ### POST /api/onboarding/signup
 
 Creates a new lead and starts the onboarding flow after the user completes the Signup step.
 
-### Request
+#### Request
 
 ```json
 {
@@ -34,7 +33,7 @@ Creates a new lead and starts the onboarding flow after the user completes the S
 }
 ```
 
-### Response
+#### Response
 
 ```json
 {
@@ -49,9 +48,9 @@ Creates a new lead and starts the onboarding flow after the user completes the S
 
 ### GET /api/onboarding/{leadId}
 
-Retrieves the onboarding record by leadId.
+Retrieves the onboarding summary by leadId.
 
-### Response
+#### Response
 
 ```json
 {
@@ -59,6 +58,110 @@ Retrieves the onboarding record by leadId.
   "status": "InProgress",
   "lastCompletedStep": "Signup",
   "currentStep": "CompanyDetails"
+}
+```
+
+---
+
+### GET /api/onboarding/{leadId}/progress
+
+Returns the current onboarding progress.
+
+#### Response
+
+```json
+{
+  "leadId": "guid",
+  "status": "InProgress",
+  "lastCompletedStep": "FinancialDetails",
+  "currentStep": "ReviewInformation"
+}
+```
+
+---
+
+### PUT /api/onboarding/{leadId}/company-details
+
+Updates onboarding with company information.
+
+#### Request
+
+```json
+{
+  "companyName": "string",
+  "companyNumber": "string",
+  "registeredAddress": "string",
+  "tradingAddress": "string",
+  "industry": "string",
+  "annualRevenue": 0
+}
+```
+
+#### Response
+
+```json
+{
+  "leadId": "guid",
+  "status": "InProgress",
+  "lastCompletedStep": "CompanyDetails",
+  "currentStep": "PersonalDetails"
+}
+```
+
+---
+
+### PUT /api/onboarding/{leadId}/personal-details
+
+Updates onboarding with personal information.
+
+#### Request
+
+```json
+{
+  "dateOfBirth": "2024-01-01",
+  "nationality": "string",
+  "residentialAddress": "string",
+  "employmentStatus": "string"
+}
+```
+
+#### Response
+
+```json
+{
+  "leadId": "guid",
+  "status": "InProgress",
+  "lastCompletedStep": "PersonalDetails",
+  "currentStep": "FinancialDetails"
+}
+```
+
+---
+
+### PUT /api/onboarding/{leadId}/financial-details
+
+Captures financial information required for underwriting.
+
+#### Request
+
+```json
+{
+  "useOpenBanking": true,
+  "hasUploadedDocuments": false,
+  "annualRevenue": 0,
+  "monthlyRevenue": 0,
+  "monthlyExpenses": 0
+}
+```
+
+#### Response
+
+```json
+{
+  "leadId": "guid",
+  "status": "InProgress",
+  "lastCompletedStep": "FinancialDetails",
+  "currentStep": "ReviewInformation"
 }
 ```
 
@@ -95,9 +198,9 @@ Fields:
 
 ---
 
-### SignupResponse
+### OnboardingResponse
 
-Represents the response returned by the API.
+Represents the shared response returned by onboarding step endpoints.
 
 Fields:
 
@@ -140,64 +243,6 @@ Represents onboarding progress.
 
 ## Planned Next Contracts
 
-### PUT /api/onboarding/{leadId}/company-details
-
-Updates onboarding with company information.
-
-Possible fields:
-
-- companyName
-- companyNumber
-- registeredAddress
-- tradingAddress
-- industry
-- annualRevenue
-
----
-
-### PUT /api/onboarding/{leadId}/personal-details
-
-Updates onboarding with personal information.
-
-Possible fields:
-
-- dateOfBirth
-- nationality
-- residentialAddress
-- employmentStatus
-
----
-
-### PUT /api/onboarding/{leadId}/financial-details
-
-Captures financial information required for underwriting.
-
-Possible fields:
-
-- bankStatements
-- openBankingConsent
-- openBankingProvider
-- uploadedDocuments
-- declaredRevenue
-- declaredExpenses
-
-Financial details may be provided either by document upload (e.g. PDF bank statements) or through Open Banking integration.
-
----
-
-### GET /api/onboarding/{leadId}/progress
-
-Returns current onboarding progress.
-
-Possible response fields:
-
-- leadId
-- status
-- lastCompletedStep
-- currentStep
-
----
-
 ### GET /api/onboarding/{leadId}/offers
 
 Returns available offers.
@@ -236,20 +281,36 @@ Possible fields:
 
 ## Notes
 
-- The API does not return routes such as "/company-details"
-- The UI is responsible for routing
+- The API does not return UI routes such as "/company-details"
+- The UI is responsible for routing and navigation
 - The backend is the source of truth for onboarding progress
-- Only the Signup contract and the basic Get By LeadId flow are implemented initially
-- Other contracts will be refined later
+- The onboarding is currently stored in memory (temporary persistence)
+- Signup, Company Details, Personal Details, Financial Details and Progress endpoints are implemented
+- Offer and loan-related endpoints are planned for future implementation
 
 ---
 
 ## Behavior
 
 - When a signup request is received, a new lead is created
-- The onboarding is stored in memory (temporary persistence)
+
+- The onboarding is stored in memory
+
 - The initial state is:
   - status: InProgress
   - lastCompletedStep: Signup
   - currentStep: CompanyDetails
-- The API returns the leadId for future steps
+
+- After company details are completed:
+  - lastCompletedStep: CompanyDetails
+  - currentStep: PersonalDetails
+
+- After personal details are completed:
+  - lastCompletedStep: PersonalDetails
+  - currentStep: FinancialDetails
+
+- After financial details are completed:
+  - lastCompletedStep: FinancialDetails
+  - currentStep: ReviewInformation
+
+- The API returns the leadId for all subsequent steps
