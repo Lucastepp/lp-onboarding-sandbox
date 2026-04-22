@@ -6,4 +6,5 @@ public interface IOnboardingRepository
 {
     void Save(OnboardingEntity onboarding);
     OnboardingEntity? GetByLeadId(Guid id);
+    OnboardingEntity? GetByEmail(string email);
 }

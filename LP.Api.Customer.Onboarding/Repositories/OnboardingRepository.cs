@@ -15,4 +15,10 @@ public class OnboardingRepository : IOnboardingRepository
     {
         return _storage.FirstOrDefault(x => x.LeadId == id);
     }
+
+    public OnboardingEntity? GetByEmail(string email)
+    {
+        var normalizedEmail = email.Trim().ToLowerInvariant();
+        return _storage.FirstOrDefault(x => x.Email.Trim().ToLowerInvariant() == normalizedEmail);
+    }
 }

@@ -20,6 +20,15 @@ namespace LP.Api.Customer.Onboarding.Services
 
         public OnboardingResponse Signup(SignupRequest request)
         {
+            var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+
+            var existingLead = _repository.GetByEmail(normalizedEmail);
+
+            if (existingLead is not null)
+            {
+                throw new InvalidOperationException("Email already exists.");
+            }
+
             var onboarding = new OnboardingEntity
             {
                 FirstName = request.FirstName,
