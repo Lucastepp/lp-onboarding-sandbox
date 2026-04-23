@@ -21,9 +21,19 @@ namespace LP.Api.Customer.Onboarding.Controllers
         [HttpPost("signup")]
         public IActionResult Signup([FromBody] SignupRequest request)
         {
-            var response = _onboardingService.Signup(request);
-
-            return Ok(response);
+            try
+            {
+                var response = _onboardingService.Signup(request);
+                return Ok(response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new
+                {
+                    error = "duplicate_email",
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpGet("{leadId:guid}")]

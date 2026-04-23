@@ -26,7 +26,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (existingLead is not null)
             {
-                throw new InvalidOperationException("Email already exists.");
+                throw new InvalidOperationException("An account with this email already exists.");
             }
 
             var onboarding = new OnboardingEntity
