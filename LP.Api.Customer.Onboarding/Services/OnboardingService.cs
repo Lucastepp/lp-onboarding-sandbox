@@ -1,11 +1,12 @@
-﻿using LP.Api.Customer.Onboarding.Contracts.Signup;
-using LP.Api.Customer.Onboarding.Enums;
-using LP.Api.Customer.Onboarding.Entities;
-using LP.Api.Customer.Onboarding.Repositories;
+﻿using LP.Api.Customer.Onboarding.Contracts.Common;
 using LP.Api.Customer.Onboarding.Contracts.CompanyDetails;
-using LP.Api.Customer.Onboarding.Contracts.Common;
-using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
 using LP.Api.Customer.Onboarding.Contracts.FinancialDetails;
+using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
+using LP.Api.Customer.Onboarding.Contracts.Signup;
+using LP.Api.Customer.Onboarding.Entities;
+using LP.Api.Customer.Onboarding.Enums;
+using LP.Api.Customer.Onboarding.Exceptions;
+using LP.Api.Customer.Onboarding.Repositories;
 
 namespace LP.Api.Customer.Onboarding.Services
 {
@@ -26,7 +27,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (existingLead is not null)
             {
-                throw new InvalidOperationException("An account with this email already exists.");
+                throw new DuplicateEmailException("An account with this email already exists.");
             }
 
             var onboarding = new OnboardingEntity

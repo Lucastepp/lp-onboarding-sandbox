@@ -1,9 +1,10 @@
-﻿using LP.Api.Customer.Onboarding.Contracts.Signup;
-using Microsoft.AspNetCore.Mvc;
-using LP.Api.Customer.Onboarding.Services;
-using LP.Api.Customer.Onboarding.Contracts.CompanyDetails;
-using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
+﻿using LP.Api.Customer.Onboarding.Contracts.CompanyDetails;
 using LP.Api.Customer.Onboarding.Contracts.FinancialDetails;
+using LP.Api.Customer.Onboarding.Contracts.PersonalDetails;
+using LP.Api.Customer.Onboarding.Contracts.Signup;
+using LP.Api.Customer.Onboarding.Exceptions;
+using LP.Api.Customer.Onboarding.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LP.Api.Customer.Onboarding.Controllers
 {
@@ -26,12 +27,20 @@ namespace LP.Api.Customer.Onboarding.Controllers
                 var response = _onboardingService.Signup(request);
                 return Ok(response);
             }
-            catch (InvalidOperationException ex)
+            catch (DuplicateEmailException ex)
             {
                 return BadRequest(new
                 {
                     error = "duplicate_email",
                     message = ex.Message
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    error = "internal_error",
+                    message = "Unexpected error"
                 });
             }
         }
