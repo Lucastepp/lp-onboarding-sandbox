@@ -1,4 +1,6 @@
-﻿namespace LP.Api.Customer.Onboarding.Contracts.FinancialDetails
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LP.Api.Customer.Onboarding.Contracts.FinancialDetails
 {
     public class FinancialDetailsRequest
     {
@@ -7,9 +9,13 @@
         public bool HasUploadedDocuments { get; set; }
 
         // Manual input
+        [Range(0, double.MaxValue)]
         public decimal? AnnualRevenue { get; set; }
-        public decimal? MonthlyRevenue { get; set; }
-        public decimal? MonthlyExpenses { get; set; }
 
+        [Range(0, double.MaxValue)]
+        public decimal? MonthlyRevenue { get; set; }
+
+        [Range(0, double.MaxValue)]
+        public decimal? MonthlyExpenses { get; set; }
     }
 }
