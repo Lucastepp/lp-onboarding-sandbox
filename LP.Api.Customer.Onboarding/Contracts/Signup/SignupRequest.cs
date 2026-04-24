@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LP.Api.Customer.Onboarding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace LP.Api.Customer.Onboarding.Contracts.Signup
 {
@@ -17,9 +18,7 @@ namespace LP.Api.Customer.Onboarding.Contracts.Signup
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [MinLength(6)]
-        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$",
-            ErrorMessage = "Password must contain uppercase, lowercase and a number")]
+        [StrongPassword]
         public string Password { get; set; } = string.Empty;
 
         [Required]
