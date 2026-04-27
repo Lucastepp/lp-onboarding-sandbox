@@ -54,19 +54,19 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (onboarding is null)
             {
-                throw new NotFoundException("Onboarding data not found");
+                throw new NotFoundException($"Onboarding with id {leadId} not found");
             }
 
             return MapToOnboardingResponse(onboarding);
         }
 
-        public OnboardingResponse? GetProgress(Guid leadId)
+        public OnboardingResponse GetProgress(Guid leadId)
         {
             var onboarding = _repository.GetByLeadId(leadId);
 
             if (onboarding is null)
             {
-                return null;
+                throw new NotFoundException($"Onboarding with id {leadId} not found");
             }
 
             return MapToOnboardingResponse(onboarding);

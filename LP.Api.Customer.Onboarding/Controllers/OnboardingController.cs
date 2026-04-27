@@ -25,6 +25,7 @@ namespace LP.Api.Customer.Onboarding.Controllers
             try
             {
                 var response = _onboardingService.Signup(request);
+
                 return Ok(response);
             }
             catch (DuplicateEmailException ex)
@@ -67,14 +68,20 @@ namespace LP.Api.Customer.Onboarding.Controllers
         [HttpGet("{leadId:guid}/progress")]
         public IActionResult GetProgress(Guid leadId)
         {
-            var response = _onboardingService.GetProgress(leadId);
-
-            if (response is null)
+            try
             {
-                return NotFound();
-            }
+                var response = _onboardingService.GetProgress(leadId);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    error = "not_found",
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPut("{leadId:guid}/company-details")]
