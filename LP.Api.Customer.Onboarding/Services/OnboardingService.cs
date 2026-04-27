@@ -54,7 +54,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (onboarding is null)
             {
-                return null;
+                throw new NotFoundException("Onboarding data not found");
             }
 
             return MapToOnboardingResponse(onboarding);
@@ -78,7 +78,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (onboarding is null)
             {
-                return null;
+                throw new NotFoundException("Onboarding data not found");
             }
 
             onboarding.CompanyDetails = new CompanyDetails
@@ -103,7 +103,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (onboarding == null)
             {
-                return null;
+                throw new NotFoundException("Onboarding data not found");
             }
 
             onboarding.PersonalDetails = new PersonalDetails
@@ -123,7 +123,7 @@ namespace LP.Api.Customer.Onboarding.Services
 
             if (onboarding == null)
             {
-                return null;
+                throw new NotFoundException("Onboarding data not found");
             }
 
             onboarding.FinancialDetails = new FinancialDetails

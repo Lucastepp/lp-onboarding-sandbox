@@ -48,14 +48,20 @@ namespace LP.Api.Customer.Onboarding.Controllers
         [HttpGet("{leadId:guid}")]
         public IActionResult GetByLeadId(Guid leadId)
         {
-            var onboarding = _onboardingService.GetByLeadId(leadId);
-
-            if (onboarding is null)
+            try
             {
-                return NotFound();
-            }
+                var onboarding = _onboardingService.GetByLeadId(leadId);
 
-            return Ok(onboarding);
+                return Ok(onboarding);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    error = "not_found",
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpGet("{leadId:guid}/progress")]
