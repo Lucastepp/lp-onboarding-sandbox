@@ -1,3 +1,4 @@
+using LP.Api.Customer.Onboarding.Middleware;
 using LP.Api.Customer.Onboarding.Repositories;
 using LP.Api.Customer.Onboarding.Services;
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
