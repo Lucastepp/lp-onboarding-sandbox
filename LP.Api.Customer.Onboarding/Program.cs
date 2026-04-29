@@ -1,3 +1,4 @@
+using LP.Api.Customer.Onboarding.Filters;
 using LP.Api.Customer.Onboarding.Middleware;
 using LP.Api.Customer.Onboarding.Repositories;
 using LP.Api.Customer.Onboarding.Services;
@@ -5,9 +6,11 @@ using LP.Api.Customer.Onboarding.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LoggingActionFilter>();
+});
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IOnboardingRepository, OnboardingRepository>();
